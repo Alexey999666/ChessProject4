@@ -57,7 +57,8 @@
                                           VerticalAlignment="Center"
                                           FontSize="36"
                                           FontWeight="Bold"
-                                          Foreground="{Binding PieceColor}"/>
+                                          Foreground="{Binding PieceColor}"
+                                           Effect="{Binding TextEffect}"/>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

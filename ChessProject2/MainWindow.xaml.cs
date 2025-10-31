@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace ChessProject2
 {
@@ -148,6 +149,18 @@ namespace ChessProject2
                 backgroundColor = ((displayRow + displayCol) % 2 == 0) ? Brushes.LightGray : Brushes.Brown;
             }
 
+            Effect textEffect = null;
+            if (piece?.Color == PieceColor.White)
+            {
+                textEffect = new DropShadowEffect
+                {
+                    ShadowDepth = 1,
+                    Color = Colors.Black,
+                    Opacity = 7,
+                    BlurRadius = 1.9
+                };
+            }
+
             var square = new BoardSquare
             {
                 Row = row,
@@ -156,7 +169,8 @@ namespace ChessProject2
                 DisplayColumn = displayCol,
                 Color = backgroundColor,
                 PieceSymbol = piece?.Symbol ?? "",
-                PieceColor = piece?.Color == PieceColor.White ? Brushes.White : Brushes.Black
+                PieceColor = piece?.Color == PieceColor.White ? Brushes.White : Brushes.Black,
+                TextEffect = textEffect
             };
 
             squares.Add(square);
@@ -274,6 +288,7 @@ namespace ChessProject2
             public Brush Color { get; set; }
             public string PieceSymbol { get; set; }
             public Brush PieceColor { get; set; }
+            public Effect TextEffect { get; set; }
         }
     }
 }
