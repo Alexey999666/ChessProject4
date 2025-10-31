@@ -205,7 +205,7 @@ namespace ChessProject2
                 Winner = chessBoard.Winner
             };
 
-            var gameOverWindow = new GameOverWindow(result);
+            var gameOverWindow = new GameOverWindow(result, this);
             gameOverWindow.Owner = this;
             gameOverWindow.ShowDialog();
         }
@@ -242,9 +242,23 @@ namespace ChessProject2
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
+            // Закрываем текущее окно и открываем меню
             MainMenuWindow menuWindow = new MainMenuWindow();
             menuWindow.Show();
             this.Close();
+        }
+        private void Resign_Click(object sender, RoutedEventArgs e)
+        {
+            var result = new GameResult
+            {
+                IsCheckmate = true,
+                IsStalemate = false,
+                Winner = isWhitePlayer ? PieceColor.Black : PieceColor.White
+            };
+
+            var gameOverWindow = new GameOverWindow(result, this);
+            gameOverWindow.Owner = this;
+            gameOverWindow.ShowDialog();
         }
 
         // Свойство для привязки кнопки смены стороны

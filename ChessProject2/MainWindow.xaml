@@ -201,6 +201,7 @@
                        Foreground="#654321"
                        FontWeight="Bold"/>
                 <Button Content="Сдаться" 
+                        Click="Resign_Click"
                        Margin="10,5,10,10" 
                        Height="35"
                        Background="#D2B48C"
