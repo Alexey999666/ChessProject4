@@ -1,0 +1,222 @@
+﻿<Window x:Class="ChessProject2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessProject2"
+        mc:Ignorable="d"
+        Title="Шахматы" Height="800" Width="600"  Background="#A0522D" WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight" MinWidth="800" MinHeight="600">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="1" Background="#DEB887" 
+                Margin="5" Height="40" CornerRadius="5"
+                BorderBrush="#8B4513" BorderThickness="1">
+            <TextBlock Text="Таймер будет здесь" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center"/>
+        </Border>
+
+        <Border Grid.Row="2" Grid.Column="1" 
+                Background="#8B4513" 
+                Margin="10" Padding="5"
+                CornerRadius="8"
+                BorderBrush="#654321" BorderThickness="3">
+
+            <!-- Доска с координатами ВНУТРИ -->
+            <Grid Width="400" Height="400">
+                <!-- Шахматная доска -->
+                <ItemsControl x:Name="ChessBoard" Background="Transparent">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="8" Columns="8" Background="Transparent"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#8B4513" BorderThickness="1" 
+                                   MouseDown="Border_MouseDown"
+                                   Background="{Binding Color}">
+                                <TextBlock Text="{Binding PieceSymbol}" 
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"
+                                          FontSize="36"
+                                          FontWeight="Bold"
+                                          Foreground="{Binding PieceColor}"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Координаты поверх доски -->
+                <Grid IsHitTestVisible="False">
+                    <!-- Буквы сверху -->
+                    <ItemsControl x:Name="TopCoordinatesControl" 
+                                 ItemsSource="{Binding TopCoordinates}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="8" Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" 
+                                          FontSize="12" 
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Top"
+                                          Margin="0,2"
+                                          Foreground="#654321"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Буквы снизу -->
+                    <ItemsControl x:Name="BottomCoordinatesControl" 
+                                 ItemsSource="{Binding BottomCoordinates}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="8" Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" 
+                                          FontSize="12" 
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Bottom"
+                                          Margin="0,2"
+                                          Foreground="#654321"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Цифры слева -->
+                    <ItemsControl x:Name="LeftCoordinatesControl" 
+                                 ItemsSource="{Binding LeftCoordinates}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="8" Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" 
+                                          FontSize="12" 
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          Margin="2,0"
+                                          Foreground="#654321"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Цифры справа -->
+                    <ItemsControl x:Name="RightCoordinatesControl" 
+                                 ItemsSource="{Binding RightCoordinates}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="8" Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" 
+                                          FontSize="12" 
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"
+                                          Margin="2,0"
+                                          Foreground="#654321"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" 
+                Background="#DEB887" 
+                Margin="5" CornerRadius="8"
+                BorderBrush="#8B4513" BorderThickness="2">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3" Opacity="0.3" BlurRadius="5"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="Список ходов:" 
+                          FontWeight="Bold" 
+                          Margin="10,10,10,5"
+                          Foreground="#654321"
+                          FontSize="14"/>
+
+                <Border Background="#FAEBD7" 
+        Margin="10,0,10,10"
+        CornerRadius="5"
+        BorderBrush="#D2B48C" BorderThickness="1">
+                    <ListBox x:Name="MovesList" Height="200" 
+            Background="Transparent"
+            BorderThickness="0"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayText}" 
+                          Margin="2"
+                          Foreground="#654321"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+                <Button Content="В главное меню" 
+                         Click="BackToMenu_Click"
+                         Margin="10,5,10,10" 
+                         Height="35"
+                         Background="#D2B48C"
+                         BorderBrush="#8B4513"
+                         Foreground="#654321"
+                         FontWeight="Bold"/>
+                <Button Content="Предложить ничью" 
+                       Margin="10,5,10,5" 
+                       Height="35"
+                       Background="#D2B48C"
+                       BorderBrush="#8B4513"
+                       Foreground="#654321"
+                       FontWeight="Bold"/>
+                <Button Content="Сдаться" 
+                       Margin="10,5,10,10" 
+                       Height="35"
+                       Background="#D2B48C"
+                       BorderBrush="#8B4513"
+                       Foreground="#654321"
+                       FontWeight="Bold"/>
+                <Button Content="Сменить сторону" 
+                        Click="SwitchSide_Click"
+                        IsEnabled="{Binding IsFirstMove}"
+                        Margin="10,5,10,10" 
+                        Height="35"
+                        Background="#D2B48C"
+                        BorderBrush="#8B4513"
+                        Foreground="#654321"
+                        FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
